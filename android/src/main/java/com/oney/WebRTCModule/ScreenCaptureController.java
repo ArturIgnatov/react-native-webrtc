@@ -17,14 +17,12 @@ public class ScreenCaptureController extends AbstractVideoCaptureController {
      */
     private static final String TAG = ScreenCaptureController.class.getSimpleName();
 
-    private static final int DEFAULT_FPS = 30;
-
     private final Intent mediaProjectionPermissionResultData;
 
     private final OrientationEventListener orientatationListener;
 
-    public ScreenCaptureController(Context context, int width, int height, Intent mediaProjectionPermissionResultData) {
-        super(width, height, DEFAULT_FPS);
+    public ScreenCaptureController(Context context, int width, int height, int fps, Intent mediaProjectionPermissionResultData) {
+        super(width, height, fps);
 
         this.mediaProjectionPermissionResultData = mediaProjectionPermissionResultData;
 
@@ -35,7 +33,7 @@ public class ScreenCaptureController extends AbstractVideoCaptureController {
                     DisplayMetrics displayMetrics = DisplayUtils.getDisplayMetrics((Activity) context);
                     int width = displayMetrics.widthPixels;
                     int height = displayMetrics.heightPixels;
-                    videoCapturer.changeCaptureFormat(width, height, DEFAULT_FPS);
+                    videoCapturer.changeCaptureFormat(width, height, fps);
                 } catch (Exception ex) {
                     // We ignore exceptions here. The video capturer runs on its own
                     // thread and we cannot synchronize with it.

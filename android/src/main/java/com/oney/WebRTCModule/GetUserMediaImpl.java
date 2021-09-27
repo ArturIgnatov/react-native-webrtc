@@ -51,10 +51,18 @@ class GetUserMediaImpl {
 
     private Promise displayMediaPromise;
     private Intent mediaProjectionPermissionResultData;
+    private Int width = 100;
+    private Int height = 200;
+    private Int fps = 25;
 
     GetUserMediaImpl(WebRTCModule webRTCModule, ReactApplicationContext reactContext) {
         this.webRTCModule = webRTCModule;
         this.reactContext = reactContext;
+
+        // Init screen share width and height from diplay metrics
+        DisplayMetrics displayMetrics = DisplayUtils.getDisplayMetrics(reactContext.getCurrentActivity());
+        this.width = displayMetrics.widthPixels;
+        this.height = displayMetrics.heightPixels;
 
         boolean camera2supported = false;
 
@@ -249,7 +257,7 @@ class GetUserMediaImpl {
         }
     }
 
-    void getDisplayMedia(Promise promise) {
+    void getDisplayMedia(ReadableMap constraints, Promise promise) {
         if (this.displayMediaPromise != null) {
             promise.reject(new RuntimeException("Another operation is pending."));
             return;
@@ -262,6 +270,20 @@ class GetUserMediaImpl {
         }
 
         this.displayMediaPromise = promise;
+
+        if (constraints) {
+          if (constraints.hasKey('width')) {
+            this.width = constraints.get('width');
+          }
+
+          if (constraints.hasKey('height')) {
+            this.height = constraints.get('height');
+          }
+
+          if (constraints.hasKey('fps')) {
+            this.fps = constraints.get('fps');
+          }
+        }
 
         MediaProjectionManager mediaProjectionManager =
             (MediaProjectionManager) currentActivity.getApplication().getSystemService(
@@ -279,6 +301,27 @@ class GetUserMediaImpl {
         } else {
             promise.reject(new RuntimeException("MediaProjectionManager is null."));
         }
+    }
+
+    void changeTrackConstraints(String trackId, ReadableMap constraints) {
+      TrackPrivate track = tracks.get(trackId);
+      if (track != null) {
+        if (constraints) {
+          if (constraints.hasKey('width')) {
+            this.width = constraints.get('width');
+          }
+
+          if (constraints.hasKey('height')) {
+            this.height = constraints.get('height');
+          }
+
+          if (constraints.hasKey('fps')) {
+            this.fps = constraints.get('fps');
+          }
+
+          track.videoCaptureController.videoCapturer.changeCaptureFormat(this.width, this.height, this.fps)
+        }
+      }
     }
 
     private void createScreenStream() {
@@ -353,11 +396,8 @@ class GetUserMediaImpl {
     }
 
     private VideoTrack createScreenTrack() {
-        DisplayMetrics displayMetrics = DisplayUtils.getDisplayMetrics(reactContext.getCurrentActivity());
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
         ScreenCaptureController screenCaptureController
-            = new ScreenCaptureController(reactContext.getCurrentActivity(), width, height, mediaProjectionPermissionResultData);
+            = new ScreenCaptureController(reactContext.getCurrentActivity(), this.width, this.height, mediaProjectionPermissionResultData);
         return createVideoTrack(screenCaptureController);
     }
 

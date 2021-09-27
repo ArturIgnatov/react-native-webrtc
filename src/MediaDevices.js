@@ -5,6 +5,7 @@ import EventTarget from 'event-target-shim';
 
 import getDisplayMedia from './getDisplayMedia';
 import getUserMedia from './getUserMedia';
+import changeTrackConstraints from './changeTrackConstraints'
 
 const {WebRTCModule} = NativeModules;
 
@@ -33,6 +34,10 @@ class MediaDevices extends EventTarget(MEDIA_DEVICES_EVENTS) {
      */
     getDisplayMedia(constraints) {
         return getDisplayMedia(constraints);
+    }
+
+    changeTrackConstraints(trackId, constraints) {
+      return changeTrackConstraints(trackId, constraints)
     }
 
     /**
