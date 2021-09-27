@@ -271,18 +271,16 @@ class GetUserMediaImpl {
 
         this.displayMediaPromise = promise;
 
-        if (constraints) {
-          if (constraints.hasKey("width")) {
-            this.width = constraints.getInt("width");
-          }
+        if (constraints.hasKey("width")) {
+          this.width = constraints.getInt("width");
+        }
 
-          if (constraints.hasKey("height")) {
-            this.height = constraints.getInt("height");
-          }
+        if (constraints.hasKey("height")) {
+          this.height = constraints.getInt("height");
+        }
 
-          if (constraints.hasKey("fps")) {
-            this.fps = constraints.getInt("fps");
-          }
+        if (constraints.hasKey("fps")) {
+          this.fps = constraints.getInt("fps");
         }
 
         MediaProjectionManager mediaProjectionManager =
@@ -306,21 +304,19 @@ class GetUserMediaImpl {
     void changeTrackConstraints(String trackId, ReadableMap constraints) {
       TrackPrivate track = tracks.get(trackId);
       if (track != null) {
-        if (constraints) {
-          if (constraints.hasKey("width")) {
-            this.width = constraints.getInt("width");
-          }
-
-          if (constraints.hasKey("height")) {
-            this.height = constraints.getInt("height");
-          }
-
-          if (constraints.hasKey("fps")) {
-            this.fps = constraints.getInt("fps");
-          }
-
-          track.videoCaptureController.videoCapturer.changeCaptureFormat(this.width, this.height, this.fps);
+        if (constraints.hasKey("width")) {
+          this.width = constraints.getInt("width");
         }
+
+        if (constraints.hasKey("height")) {
+          this.height = constraints.getInt("height");
+        }
+
+        if (constraints.hasKey("fps")) {
+          this.fps = constraints.getInt("fps");
+        }
+
+        track.videoCaptureController.videoCapturer.changeCaptureFormat(this.width, this.height, this.fps);
       }
     }
 
@@ -397,7 +393,7 @@ class GetUserMediaImpl {
 
     private VideoTrack createScreenTrack() {
         ScreenCaptureController screenCaptureController
-            = new ScreenCaptureController(reactContext.getCurrentActivity(), this.width, this.height, mediaProjectionPermissionResultData);
+            = new ScreenCaptureController(reactContext.getCurrentActivity(), this.width, this.height,this.fps, mediaProjectionPermissionResultData);
         return createVideoTrack(screenCaptureController);
     }
 
