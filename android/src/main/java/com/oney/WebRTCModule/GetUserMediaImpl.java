@@ -272,16 +272,16 @@ class GetUserMediaImpl {
         this.displayMediaPromise = promise;
 
         if (constraints) {
-          if (constraints.hasKey('width')) {
-            this.width = constraints.get('width');
+          if (constraints.hasKey("width")) {
+            this.width = constraints.get("width");
           }
 
-          if (constraints.hasKey('height')) {
-            this.height = constraints.get('height');
+          if (constraints.hasKey("height")) {
+            this.height = constraints.get("height");
           }
 
-          if (constraints.hasKey('fps')) {
-            this.fps = constraints.get('fps');
+          if (constraints.hasKey("fps")) {
+            this.fps = constraints.get("fps");
           }
         }
 
@@ -307,19 +307,19 @@ class GetUserMediaImpl {
       TrackPrivate track = tracks.get(trackId);
       if (track != null) {
         if (constraints) {
-          if (constraints.hasKey('width')) {
-            this.width = constraints.get('width');
+          if (constraints.hasKey("width")) {
+            this.width = constraints.get("width");
           }
 
-          if (constraints.hasKey('height')) {
-            this.height = constraints.get('height');
+          if (constraints.hasKey("height")) {
+            this.height = constraints.get("height");
           }
 
-          if (constraints.hasKey('fps')) {
-            this.fps = constraints.get('fps');
+          if (constraints.hasKey("fps")) {
+            this.fps = constraints.get("fps");
           }
 
-          track.videoCaptureController.videoCapturer.changeCaptureFormat(this.width, this.height, this.fps)
+          track.videoCaptureController.videoCapturer.changeCaptureFormat(this.width, this.height, this.fps);
         }
       }
     }
