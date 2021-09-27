@@ -59,11 +59,6 @@ class GetUserMediaImpl {
         this.webRTCModule = webRTCModule;
         this.reactContext = reactContext;
 
-        // Init screen share width and height from diplay metrics
-        DisplayMetrics displayMetrics = DisplayUtils.getDisplayMetrics(reactContext.getCurrentActivity());
-        this.width = displayMetrics.widthPixels;
-        this.height = displayMetrics.heightPixels;
-
         boolean camera2supported = false;
 
         try {
