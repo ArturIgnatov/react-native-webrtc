@@ -51,9 +51,9 @@ class GetUserMediaImpl {
 
     private Promise displayMediaPromise;
     private Intent mediaProjectionPermissionResultData;
-    private Int width = 100;
-    private Int height = 200;
-    private Int fps = 25;
+    private int width = 100;
+    private int height = 200;
+    private int fps = 25;
 
     GetUserMediaImpl(WebRTCModule webRTCModule, ReactApplicationContext reactContext) {
         this.webRTCModule = webRTCModule;
@@ -273,15 +273,15 @@ class GetUserMediaImpl {
 
         if (constraints) {
           if (constraints.hasKey("width")) {
-            this.width = constraints.get("width");
+            this.width = constraints.getInt("width");
           }
 
           if (constraints.hasKey("height")) {
-            this.height = constraints.get("height");
+            this.height = constraints.getInt("height");
           }
 
           if (constraints.hasKey("fps")) {
-            this.fps = constraints.get("fps");
+            this.fps = constraints.getInt("fps");
           }
         }
 
@@ -308,15 +308,15 @@ class GetUserMediaImpl {
       if (track != null) {
         if (constraints) {
           if (constraints.hasKey("width")) {
-            this.width = constraints.get("width");
+            this.width = constraints.getInt("width");
           }
 
           if (constraints.hasKey("height")) {
-            this.height = constraints.get("height");
+            this.height = constraints.getInt("height");
           }
 
           if (constraints.hasKey("fps")) {
-            this.fps = constraints.get("fps");
+            this.fps = constraints.getInt("fps");
           }
 
           track.videoCaptureController.videoCapturer.changeCaptureFormat(this.width, this.height, this.fps);
